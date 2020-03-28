@@ -13,6 +13,8 @@ const httpOptions = {
   providedIn: "root"
 })
 export class AuthService {
+  redirectUrl: string;
+
   constructor(private http: HttpClient) {}
 
   login(credentials): Observable<any> {
