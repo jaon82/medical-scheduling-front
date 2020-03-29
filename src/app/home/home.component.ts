@@ -11,8 +11,9 @@ import { MatSort } from "@angular/material";
   styleUrls: ["./home.component.css"]
 })
 export class HomeComponent implements OnInit {
-  appointments: MatTableDataSource<any>;
-  displayedColumns: string[] = ["id", "doctor", "customer", "date"];
+  appointments = [];
+  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ["id", "doctor", "customer", "date", "delete"];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -24,7 +25,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getAppointments();
-    console.log(this.appointments);
+    console.log(this.dataSource);
   }
 
   createAppointment() {
@@ -33,14 +34,15 @@ export class HomeComponent implements OnInit {
 
   getAppointments() {
     this.appointmentService.getAppointments().subscribe(data => {
-      this.appointments = new MatTableDataSource(data);
+      this.appointments = data;
       this.parseAppointments();
     });
   }
 
   parseAppointments() {
-    this.appointments.sort = this.sort;
-    this.appointments.sortingDataAccessor = (item, property) => {
+    this.dataSource = new MatTableDataSource(this.appointments);
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
         case "doctor":
           return item.doctor.name;
@@ -50,18 +52,25 @@ export class HomeComponent implements OnInit {
           return item[property];
       }
     };
-    this.appointments.filterPredicate = (data, filter) => {
+    this.dataSource.filterPredicate = (data, filter) => {
       const dataStr = `${data.id}${data.doctor.name}${data.customer.name}${data.date}`.toLocaleLowerCase();
       return dataStr.includes(filter);
     };
     setTimeout(() => {
-      this.appointments.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator;
     }, 300);
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     console.log(filterValue);
-    this.appointments.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  delete(element) {
+    this.appointmentService.delete(element.id).subscribe(() => {
+      this.appointments = this.appointments.filter(item => item.id != element.id);
+      this.parseAppointments();
+    });
   }
 }

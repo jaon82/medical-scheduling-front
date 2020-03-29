@@ -42,4 +42,8 @@ export class AppointmentService {
       httpOptions
     );
   }
+
+  delete(id): Observable<any> {
+    return this.http.delete(`${API_URL}/appointment/${id}`, httpOptions);
+  }
 }
