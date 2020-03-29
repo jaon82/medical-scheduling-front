@@ -1,1 +1,54 @@
-<p>customer-form works!</p>
+<div fxLayout="column" fxFlexFill fxLayoutAlign="start center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Customer</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" novalidate>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe" [formControl]="form.controls['name']" required>
+            <mat-error *ngIf="form.controls['name'].hasError('required')">Name required!</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="mail@example.com" [formControl]="form.controls['email']" required>
+            <mat-error *ngIf="form.controls['email'].invalid">Email ivalid!</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>CPF</mat-label>
+            <input matInput [formControl]="form.controls['cpf']">
+            <mat-error *ngIf="form.controls['cpf'].hasError('required')">CPF required!</mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Telefone</mat-label>
+            <input matInput [formControl]="form.controls['telefone']">
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="space-between center">
+          <button type="button" mat-raised-button color="primary" (click)="clearForm()">Clear</button>
+          <button type="button" mat-raised-button color="primary" [disabled]="form.invalid || showLoader"
+            (click)="onSubmit()">Save</button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions *ngIf="showLoader">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-actions>
+  </mat-card>
+  <div class="alert alert-danger auth-error" role="alert" *ngIf="error">
+    <div *ngIf="!error.errors">
+      <mat-error>{{ error.message }}</mat-error>
+    </div>
+    <div *ngIf="error.errors">
+      <mat-error *ngFor="let error of error.errors">Field {{ error.field }}: {{error.defaultMessage }}</mat-error>
+    </div>
+  </div>
+</div>

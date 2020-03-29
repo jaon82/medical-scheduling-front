@@ -13,6 +13,7 @@ export class AppointmentComponent implements OnInit {
   showDoctorForm = false;
   showCustomerForm = false;
   doctors = [];
+  customers = [];
 
   constructor(private appointmentService: AppointmentService) {}
 
@@ -23,11 +24,18 @@ export class AppointmentComponent implements OnInit {
       date: new FormControl("", Validators.required)
     });
     this.getDoctors();
+    this.getCustomers();
   }
 
   getDoctors() {
     this.appointmentService.getDoctors().subscribe(data => {
       this.doctors = data;
+    });
+  }
+
+  getCustomers() {
+    this.appointmentService.getCustomers().subscribe(data => {
+      this.customers = data;
     });
   }
 
@@ -45,5 +53,11 @@ export class AppointmentComponent implements OnInit {
     this.doctors.push(newDoctor);
     this.form.controls.doctor.setValue(newDoctor.id);
     this.showDoctorForm = false;
+  }
+
+  onNewCustomer(newCustomer) {
+    this.customers.push(newCustomer);
+    this.form.controls.customer.setValue(newCustomer.id);
+    this.showCustomerForm = false;
   }
 }

@@ -23,15 +23,11 @@ export class AppointmentService {
     return this.http.post(`${API_URL}/doctor`, doctor, httpOptions);
   }
 
-  getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + "user", { responseType: "text" });
+  getCustomers(): Observable<any> {
+    return this.http.get(`${API_URL}/customer`, httpOptions);
   }
 
-  getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + "mod", { responseType: "text" });
-  }
-
-  getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + "admin", { responseType: "text" });
+  createCustomer(customer): Observable<any> {
+    return this.http.post(`${API_URL}/customer`, customer, httpOptions);
   }
 }
