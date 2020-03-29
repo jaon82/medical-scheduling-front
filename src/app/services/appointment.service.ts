@@ -19,6 +19,10 @@ export class AppointmentService {
     return this.http.get(`${API_URL}/doctor`, httpOptions);
   }
 
+  createDoctor(doctor): Observable<any> {
+    return this.http.post(`${API_URL}/doctor`, doctor, httpOptions);
+  }
+
   getUserBoard(): Observable<any> {
     return this.http.get(API_URL + "user", { responseType: "text" });
   }

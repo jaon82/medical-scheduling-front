@@ -35,8 +35,15 @@ export class AppointmentComponent implements OnInit {
     this.showCustomerForm = false;
     this.showDoctorForm = true;
   }
+
   createCustomer() {
     this.showDoctorForm = false;
     this.showCustomerForm = true;
+  }
+
+  onNewDoctor(newDoctor) {
+    this.doctors.push(newDoctor);
+    this.form.controls.doctor.setValue(newDoctor.id);
+    this.showDoctorForm = false;
   }
 }

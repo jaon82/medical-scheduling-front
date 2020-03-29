@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+
+import { AppointmentService } from "../../../services/appointment.service";
 
 @Component({
   selector: "doctor-form",
@@ -7,9 +9,13 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
   styleUrls: ["./doctor-form.component.css"]
 })
 export class DoctorFormComponent implements OnInit {
-  form: FormGroup;
+  @Output() newDoctor = new EventEmitter<any>();
 
-  constructor() {}
+  form: FormGroup;
+  showLoader = false;
+  error;
+
+  constructor(private appointmentService: AppointmentService) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -17,5 +23,26 @@ export class DoctorFormComponent implements OnInit {
       email: new FormControl("", [Validators.required, Validators.email]),
       crm: new FormControl("")
     });
+  }
+
+  clearForm() {
+    this.form.reset();
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+    this.showLoader = true;
+    this.appointmentService.createDoctor(this.form.value).subscribe(
+      data => {
+        this.newDoctor.emit(data);
+      },
+      err => {
+        this.error = err.error;
+      },
+      () => {
+        this.showLoader = false;
+        this.clearForm();
+      }
+    );
   }
 }
