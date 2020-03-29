@@ -14,7 +14,8 @@ import {
   MatTableModule,
   MatSelectModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatPaginatorModule
 } from "@angular/material";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -63,7 +64,8 @@ import { CustomerFormComponent } from './home/appointment/customer-form/customer
     MatTableModule,
     MatSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
