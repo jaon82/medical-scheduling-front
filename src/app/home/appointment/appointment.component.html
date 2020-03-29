@@ -32,12 +32,17 @@
               </mat-form-field>
             </div>
             <div>
-              date
+              <mat-form-field>
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" [formControl]="form.controls['date']">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
             </div>
             <div fxLayoutAlign="space-between center">
-              <button type="button" mat-raised-button color="primary" (click)="signIn()">Sign In</button>
+              <button type="button" mat-raised-button color="primary" (click)="clearForm()">Clear</button>
               <button type="button" mat-raised-button color="primary" [disabled]="form.invalid || showLoader"
-                (click)="onSubmit()">Sign Up</button>
+                (click)="onSubmit()">Save</button>
             </div>
           </form>
         </mat-card-content>
@@ -62,14 +67,12 @@
         <mat-card-actions fxLayoutAlign="center">
           <button type="button" mat-raised-button color="primary" (click)="createDoctor()">Create Doctor</button>
           <button type="button" mat-raised-button color="primary" (click)="createCustomer()">Create Customer</button>
+          <button type="button" mat-raised-button color="primary" (click)="appointments()">Appointments</button>
         </mat-card-actions>
         <mat-card-content>
           <doctor-form *ngIf="showDoctorForm" (newDoctor)="onNewDoctor($event)"></doctor-form>
           <customer-form *ngIf="showCustomerForm" (newCustomer)="onNewCustomer($event)"></customer-form>
         </mat-card-content>
-        <mat-card-actions>
-          <mat-progress-bar *ngIf="showLoader" mode="indeterminate"></mat-progress-bar>
-        </mat-card-actions>
       </mat-card>
     </div>
   </div>

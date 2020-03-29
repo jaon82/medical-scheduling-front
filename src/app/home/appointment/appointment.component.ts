@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 import { AppointmentService } from "../../services/appointment.service";
 
@@ -14,8 +15,13 @@ export class AppointmentComponent implements OnInit {
   showCustomerForm = false;
   doctors = [];
   customers = [];
+  showLoader = false;
+  error;
 
-  constructor(private appointmentService: AppointmentService) {}
+  constructor(
+    private appointmentService: AppointmentService,
+    public router: Router
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -59,5 +65,30 @@ export class AppointmentComponent implements OnInit {
     this.customers.push(newCustomer);
     this.form.controls.customer.setValue(newCustomer.id);
     this.showCustomerForm = false;
+  }
+
+  clearForm() {
+    this.form.reset();
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+    this.showLoader = true;
+    this.appointmentService.createAppointment(this.form.value).subscribe(
+      data => {
+        console.log(data);
+      },
+      err => {
+        this.error = err.error;
+      },
+      () => {
+        this.showLoader = false;
+        this.clearForm();
+      }
+    );
+  }
+
+  appointments() {
+    this.router.navigate(["home"]);
   }
 }

@@ -30,4 +30,16 @@ export class AppointmentService {
   createCustomer(customer): Observable<any> {
     return this.http.post(`${API_URL}/customer`, customer, httpOptions);
   }
+
+  getAppointments(): Observable<any> {
+    return this.http.get(`${API_URL}/appointment`, httpOptions);
+  }
+
+  createAppointment(appointment): Observable<any> {
+    return this.http.post(
+      `${API_URL}/appointment/doctor/${appointment.doctor}/customer/${appointment.customer}`,
+      { date: appointment.date },
+      httpOptions
+    );
+  }
 }

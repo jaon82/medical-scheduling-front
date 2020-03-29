@@ -12,7 +12,9 @@ import {
   MatProgressBarModule,
   MatIconModule,
   MatTableModule,
-  MatSelectModule
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from "@angular/material";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -59,7 +61,9 @@ import { CustomerFormComponent } from './home/appointment/customer-form/customer
     MatProgressBarModule,
     MatIconModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
