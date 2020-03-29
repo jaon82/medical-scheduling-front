@@ -12,7 +12,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 export class RegisterComponent implements OnInit {
   form: FormGroup;
   isSignUpFailed = false;
-  error = "";
+  error;
   showLoader = false;
 
   constructor(private authService: AuthService, public router: Router) {}

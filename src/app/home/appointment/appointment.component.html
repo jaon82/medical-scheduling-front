@@ -50,7 +50,7 @@
           <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         </mat-card-actions>
       </mat-card>
-      <div class="alert alert-danger auth-error" role="alert" *ngIf="isSignUpFailed">
+      <div class="alert alert-danger auth-error" role="alert" *ngIf="error">
         <div *ngIf="!error.errors">
           <mat-error>{{ error.message }}</mat-error>
         </div>
