@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { TokenStorageService } from "./services/token-storage.service";
+import { AuthService } from "./services/auth.service";
 
 @Component({
   selector: "app-root",
@@ -13,7 +14,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private tokenStorageService: TokenStorageService,
-    public router: Router
+    public router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
@@ -23,7 +25,7 @@ export class AppComponent implements OnInit {
       const user = this.tokenStorageService.getUser();
       this.username = user.username;
 
-      const redirectUrl = "/home";
+      const redirectUrl = this.authService.redirectUrl || "home";
       this.router.navigate([redirectUrl]);
     }
   }
