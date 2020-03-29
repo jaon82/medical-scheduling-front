@@ -1,65 +1,49 @@
-<div fxLayout="column" fxLayoutAlign="space-evenly center">
-  form
-</div>
-
-
-
-
-
-
-
-
-<div class="col-md-12">
-  <div class="card card-container">
-    <img id="profile-img" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" class="profile-img-card" />
-    <form *ngIf="!isSuccessful" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required minlength="3"
-          maxlength="20" #name="ngModel" />
-        <div class="alert-danger" *ngIf="f.submitted && name.invalid">
-          <div *ngIf="name.errors.required">Name is required</div>
-          <div *ngIf="name.errors.minlength">
-            Name must be at least 3 characters
-          </div>
-          <div *ngIf="name.errors.maxlength">
-            Name must be at most 20 characters
-          </div>
+<div fxLayout="column" fxFlexFill fxLayoutAlign="start center">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Sign Up</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="form" novalidate>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe" [formControl]="form.controls['name']" required>
+            <mat-error *ngIf="form.controls['name'].hasError('required')">Name required!</mat-error>
+          </mat-form-field>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" class="form-control" name="email" [(ngModel)]="form.email" required email
-          #email="ngModel" />
-        <div class="alert-danger" *ngIf="f.submitted && email.invalid">
-          <div *ngIf="email.errors.required">Email is required</div>
-          <div *ngIf="email.errors.email">
-            Email must be a valid email address
-          </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="mail@example.com" [formControl]="form.controls['email']" required>
+            <mat-error *ngIf="form.controls['email'].invalid">Email ivalid!</mat-error>
+          </mat-form-field>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" name="password" [(ngModel)]="form.password" required minlength="6"
-          #password="ngModel" />
-        <div class="alert-danger" *ngIf="f.submitted && password.invalid">
-          <div *ngIf="password.errors.required">Password is required</div>
-          <div *ngIf="password.errors.minlength">
-            Password must be at least 6 characters
-          </div>
+        <div>
+          <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input type="password" matInput placeholder="mail@example.com" [formControl]="form.controls['password']"
+              required>
+            <mat-error *ngIf="form.controls['password'].invalid">Password ivalid!</mat-error>
+          </mat-form-field>
         </div>
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary btn-block">Sign Up</button>
-      </div>
-
-      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-        Signup failed!<br />{{ errorMessage }}
-      </div>
-    </form>
-
-    <div class="alert alert-success" *ngIf="isSuccessful">
-      Your registration is successful!
+        <div fxLayoutAlign="space-between center">
+          <button type="button" mat-raised-button color="primary" (click)="signIn()">Sign In</button>
+          <button type="button" mat-raised-button color="primary" [disabled]="form.invalid || showLoader"
+            (click)="onSubmit()">Sign Up</button>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card-actions *ngIf="showLoader">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </mat-card-actions>
+  </mat-card>
+  <div class="alert alert-danger auth-error" role="alert" *ngIf="isSignUpFailed">
+    <div *ngIf="!error.errors">
+      <mat-error>{{ error.message }}</mat-error>
+    </div>
+    <div *ngIf="error.errors">
+      <mat-error *ngFor="let error of error.errors">Field {{ error.field }}: {{error.defaultMessage }}</mat-error>
     </div>
   </div>
 </div>
