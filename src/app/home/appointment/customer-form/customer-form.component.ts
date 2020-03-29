@@ -38,6 +38,7 @@ export class CustomerFormComponent implements OnInit {
       },
       err => {
         this.error = err.error;
+        this.showLoader = false;
       },
       () => {
         this.showLoader = false;

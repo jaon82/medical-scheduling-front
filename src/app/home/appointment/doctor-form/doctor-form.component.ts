@@ -21,7 +21,7 @@ export class DoctorFormComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl("", Validators.required),
       email: new FormControl("", [Validators.required, Validators.email]),
-      crm: new FormControl("")
+      crm: new FormControl("", Validators.required)
     });
   }
 
@@ -38,6 +38,7 @@ export class DoctorFormComponent implements OnInit {
       },
       err => {
         this.error = err.error;
+        this.showLoader = false;
       },
       () => {
         this.showLoader = false;

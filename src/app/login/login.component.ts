@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = "";
+  error;
   showLoader = false;
 
   constructor(
@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
         this.reloadPage();
       },
       err => {
-        this.errorMessage = err.error.message;
+        this.error = err;
         this.isLoginFailed = true;
         this.showLoader = false;
         setTimeout(() => {

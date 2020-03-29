@@ -3,6 +3,7 @@ import { AppointmentService } from "../services/appointment.service";
 import { Router } from "@angular/router";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material";
 
 @Component({
   selector: "app-home",
@@ -11,9 +12,10 @@ import { MatTableDataSource } from "@angular/material/table";
 })
 export class HomeComponent implements OnInit {
   appointments: MatTableDataSource<any>;
-  displayedColumns: string[] = ["id", "doctor", "customer", "data"];
+  displayedColumns: string[] = ["id", "doctor", "customer", "date"];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     public router: Router,
@@ -22,6 +24,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.getAppointments();
+    console.log(this.appointments);
   }
 
   createAppointment() {
@@ -31,9 +34,34 @@ export class HomeComponent implements OnInit {
   getAppointments() {
     this.appointmentService.getAppointments().subscribe(data => {
       this.appointments = new MatTableDataSource(data);
-      setTimeout(() => {
-        this.appointments.paginator = this.paginator;
-      }, 300);
+      this.parseAppointments();
     });
+  }
+
+  parseAppointments() {
+    this.appointments.sort = this.sort;
+    this.appointments.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case "doctor":
+          return item.doctor.name;
+        case "customer":
+          return item.customer.name;
+        default:
+          return item[property];
+      }
+    };
+    this.appointments.filterPredicate = (data, filter) => {
+      const dataStr = `${data.id}${data.doctor.name}${data.customer.name}${data.date}`.toLocaleLowerCase();
+      return dataStr.includes(filter);
+    };
+    setTimeout(() => {
+      this.appointments.paginator = this.paginator;
+    }, 300);
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue);
+    this.appointments.filter = filterValue.trim().toLowerCase();
   }
 }

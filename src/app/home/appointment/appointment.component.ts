@@ -16,6 +16,7 @@ export class AppointmentComponent implements OnInit {
   doctors = [];
   customers = [];
   showLoader = false;
+  success = false;
   error;
 
   constructor(
@@ -72,18 +73,22 @@ export class AppointmentComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.error = null;
     this.showLoader = true;
     this.appointmentService.createAppointment(this.form.value).subscribe(
       data => {
-        console.log(data);
+        this.success = true;
       },
       err => {
         this.error = err.error;
+        this.showLoader = false;
       },
       () => {
         this.showLoader = false;
         this.clearForm();
+        setTimeout(() => {
+          this.success = false;
+        }, 2000);
       }
     );
   }

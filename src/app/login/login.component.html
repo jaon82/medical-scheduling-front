@@ -31,10 +31,9 @@
     <mat-card-actions *ngIf="showLoader">
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     </mat-card-actions>
-    <mat-card-footer>
-      <div class="alert alert-danger auth-error" role="alert" *ngIf="isLoginFailed">
-        <mat-error>Login failed: {{ errorMessage }}</mat-error>
-      </div>
-    </mat-card-footer>
   </mat-card>
+  <div class="alert alert-danger auth-error" role="alert" *ngIf="isLoginFailed">
+    <mat-error *ngIf="error.status == 0">{{ error.message }}</mat-error>
+    <mat-error *ngIf="error.status != 0">Login failed: {{ error.error.message }}</mat-error>
+  </div>
 </div>

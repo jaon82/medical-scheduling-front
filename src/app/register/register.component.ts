@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
         this.router.navigate(["sign-in"]);
       },
       err => {
-        this.error = err.error;
+        this.error = err;
         this.isSignUpFailed = true;
         this.showLoader = false;
       }

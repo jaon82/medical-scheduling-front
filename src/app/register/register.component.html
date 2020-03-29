@@ -39,11 +39,14 @@
     </mat-card-actions>
   </mat-card>
   <div class="alert alert-danger auth-error" role="alert" *ngIf="isSignUpFailed">
-    <div *ngIf="!error.errors">
+    <div *ngIf="error.status == 0">
       <mat-error>{{ error.message }}</mat-error>
     </div>
-    <div *ngIf="error.errors">
-      <mat-error *ngFor="let error of error.errors">Field {{ error.field }}: {{error.defaultMessage }}</mat-error>
+    <div *ngIf="!error.error.errors && error.status != 0">
+      <mat-error>{{ error.error.message }}</mat-error>
+    </div>
+    <div *ngIf="error.error.errors">
+      <mat-error *ngFor="let error of error.error.errors">Field {{ error.field }}: {{error.defaultMessage }}</mat-error>
     </div>
   </div>
 </div>
