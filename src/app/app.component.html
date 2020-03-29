@@ -1,34 +1,21 @@
-<div id="app">
-  <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <ul class="navbar-nav mr-auto" routerLinkActive="active">
-      <li class="nav-item">
-        <a href="/home" class="nav-link" routerLink="home">Home </a>
-      </li>
-      <li class="nav-item">
-        <a href="/user" class="nav-link" *ngIf="isLoggedIn" routerLink="user">User</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
-      <li class="nav-item">
-        <a href="/register" class="nav-link" routerLink="register">Sign Up</a>
-      </li>
-      <li class="nav-item">
-        <a href="/login" class="nav-link" routerLink="login">Login</a>
-      </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-item">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
-      <li class="nav-item">
-        <a href class="nav-link" (click)="logout()">LogOut</a>
-      </li>
-    </ul>
-  </nav>
-
-  <div class="container">
-    <router-outlet></router-outlet>
+<div fxLayout="column" fxFlexFill>
+  <div fxFlex="10">
+    <mat-toolbar color="primary" fxLayoutAlign="space-between center">
+      <span>Medical Scheduling</span>
+      <span *ngIf="isLoggedIn">{{username}}</span>
+      <span *ngIf="isLoggedIn" (click)="logout()" class="action-icon">
+        <mat-icon aria-hidden="false" aria-label="Sign out" title="Sign out">power_off</mat-icon>
+      </span>
+    </mat-toolbar>
+  </div>
+  <div fxFlex>
+    <mat-card fxFill fxLayoutAlign="center stretch">
+      <router-outlet></router-outlet>
+    </mat-card>
+  </div>
+  <div fxFlex="10">
+    <mat-toolbar color="primary">
+      <span></span>
+    </mat-toolbar>
   </div>
 </div>

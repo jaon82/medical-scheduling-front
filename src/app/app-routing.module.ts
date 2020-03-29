@@ -10,10 +10,10 @@ import { HomeComponent } from "./home/home.component";
 
 
 const routes: Routes = [
-  { path: "register", component: RegisterComponent },
-  { path: "login", component: LoginComponent },
+  { path: "sign-up", component: RegisterComponent },
+  { path: "sign-in", component: LoginComponent },
   { path: "home", component: HomeComponent, canActivate: [AuthGuard] },
-  { path: "", redirectTo: "login", pathMatch: "full" },
+  { path: "", redirectTo: "sign-in", pathMatch: "full" },
   { path: "**", component: PageNotFoundComponent }
 ];
 
