@@ -10,7 +10,9 @@ import {
   MatButtonModule,
   MatProgressSpinnerModule,
   MatProgressBarModule,
-  MatIconModule
+  MatIconModule,
+  MatTableModule,
+  MatSelectModule
 } from "@angular/material";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -25,6 +27,9 @@ import { LoginComponent } from "./login/login.component";
 import { HomeComponent } from "./home/home.component";
 
 import { authInterceptorProviders } from "./helpers/auth.interceptor";
+import { AppointmentComponent } from './home/appointment/appointment.component';
+import { DoctorFormComponent } from './home/appointment/doctor-form/doctor-form.component';
+import { CustomerFormComponent } from './home/appointment/customer-form/customer-form.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +37,10 @@ import { authInterceptorProviders } from "./helpers/auth.interceptor";
     PageNotFoundComponent,
     RegisterComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    AppointmentComponent,
+    DoctorFormComponent,
+    CustomerFormComponent
   ],
   imports: [
     BrowserModule,
@@ -49,7 +57,9 @@ import { authInterceptorProviders } from "./helpers/auth.interceptor";
     MatButtonModule,
     MatProgressSpinnerModule,
     MatProgressBarModule,
-    MatIconModule
+    MatIconModule,
+    MatTableModule,
+    MatSelectModule
   ],
   providers: [authInterceptorProviders],
   bootstrap: [AppComponent]

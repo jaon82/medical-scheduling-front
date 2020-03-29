@@ -21,10 +21,8 @@
         </div>
         <div>
           <mat-form-field appearance="fill">
-            <mat-label>Password</mat-label>
-            <input type="password" matInput [formControl]="form.controls['password']"
-              required>
-            <mat-error *ngIf="form.controls['password'].invalid">Password ivalid!</mat-error>
+            <mat-label>CRM</mat-label>
+            <input matInput [formControl]="form.controls['crm']">
           </mat-form-field>
         </div>
         <div fxLayoutAlign="space-between center">
